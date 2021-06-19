@@ -1,9 +1,17 @@
 #include <stdio.h>
-#include "rsa.h"
 #include <string.h>
 #include <stdlib.h>
+#include "rsa.h"
+#include "write2file.h"
 
-int main(int argc, char **argv)
+int main2(int argc, char **argv)
+{
+	write2file();
+
+	readfromfile();
+}
+
+int main1(int argc, char **argv)
 {
   struct public_key_class pub[1];
   struct private_key_class priv[1];
@@ -12,17 +20,17 @@ int main(int argc, char **argv)
   printf("Private Key:\n Modulus: %lld\n Exponent: %lld\n", (long long)priv->modulus, (long long) priv->exponent);
   printf("Public Key:\n Modulus: %lld\n Exponent: %lld\n", (long long)pub->modulus, (long long) pub->exponent);
   
-  char message[] = "tony2278";
+  char message[] = "20210529smiles20220529";
   int i;
 
   printf("Original:\n");
   for(i=0; i < strlen(message); i++){
-    printf("%lld\n", (long long)message[i]);
+    printf("%lld ", (long long)message[i]);
   }  
 
-  printf("Original:\n");
+  printf("\nOriginal:\n");
   for (i = 0; i < strlen(message); i++) {
-	  printf("%c\n", message[i]);
+	  printf("%c ", message[i]);
   }
   
   long long *encrypted = rsa_encrypt(message, sizeof(message), pub);
@@ -30,7 +38,7 @@ int main(int argc, char **argv)
     fprintf(stderr, "Error in encryption!\n");
     return 1;
   }
-  printf("Encrypted:\n");
+  printf("\nEncrypted:\n");
   for(i=0; i < strlen(message); i++){
     printf("%lld\n", (long long)encrypted[i]);
   }  
@@ -40,14 +48,14 @@ int main(int argc, char **argv)
     fprintf(stderr, "Error in decryption!\n");
     return 1;
   }
-  printf("Decrypted:\n");
+  printf("\nDecrypted:\n");
   for(i=0; i < strlen(message); i++){
-    printf("%lld\n", (long long)decrypted[i]);
+    printf("%lld ", (long long)decrypted[i]);
   }  
 
-  printf("Decrypted:\n");
+  printf("\nDecrypted:\n");
   for (i = 0; i < strlen(message); i++) {
-	  printf("%c\n", decrypted[i]);
+	  printf("%c ", decrypted[i]);
   }
   
   printf("\n");
